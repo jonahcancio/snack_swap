@@ -1,0 +1,13 @@
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container-fluid
+    = link_to "Snack App", root_path, class: "navbar-brand"
+    %ul.navbar-nav.ms-auto
+      - if authenticated?
+        %li.nav-item
+          %span.nav-link.text-light.me-2
+            Hello #{current_user&.name.presence || current_user&.email}
+        %li.nav-item
+          = button_to "Logout", logout_path, method: :delete, class: "btn btn-link nav-link", form: { "data-turbo-confirm": "Are you sure you want to log out?" }
+      - else
+        %li.nav-item
+          = link_to "Login", new_session_path, class: "nav-link"
