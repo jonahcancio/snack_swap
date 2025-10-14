@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_14_075737) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_14_082347) do
+  create_table "flavors", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "color", default: "#FFFFFF"
+    t.float "score", default: 0.5
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -20,13 +28,44 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_075737) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "snack_flavors", force: :cascade do |t|
+    t.integer "snack_id", null: false
+    t.integer "flavor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flavor_id"], name: "index_snack_flavors_on_flavor_id"
+    t.index ["snack_id"], name: "index_snack_flavors_on_snack_id"
+  end
+
+  create_table "snacks", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.string "img_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_snacks", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "snack_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["snack_id"], name: "index_user_snacks_on_snack_id"
+    t.index ["user_id"], name: "index_user_snacks_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "email_address", null: false
+    t.string "email", null: false
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.string "name", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "sessions", "users"
+  add_foreign_key "snack_flavors", "flavors"
+  add_foreign_key "snack_flavors", "snacks"
+  add_foreign_key "user_snacks", "snacks"
+  add_foreign_key "user_snacks", "users"
 end

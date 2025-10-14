@@ -1,0 +1,10 @@
+%p{style: "color: green"}= notice
+
+= render @snack
+
+%div
+  = link_to "Edit this snack", edit_snack_path(@snack)
+  |
+  = link_to "Back to snacks", snacks_path
+
+  = button_to "Destroy this snack", @snack, method: :delete

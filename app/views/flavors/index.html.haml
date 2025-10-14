@@ -1,0 +1,13 @@
+%p{style: "color: green"}= notice
+
+- content_for :title, "Flavors"
+
+%h1 Flavors
+
+%div{id: "flavors"}
+  - @flavors.each do |flavor|
+    = render flavor
+    %p
+      = link_to "Show this flavor", flavor
+
+= link_to "New flavor", new_flavor_path

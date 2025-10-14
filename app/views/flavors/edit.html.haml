@@ -1,0 +1,12 @@
+- content_for :title, "Editing flavor"
+
+%h1 Editing flavor
+
+= render "form", flavor: @flavor
+
+%br
+
+%div
+  = link_to "Show this flavor", @flavor
+  |
+  = link_to "Back to flavors", flavors_path

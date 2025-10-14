@@ -1,0 +1,12 @@
+- content_for :title, "Editing snack"
+
+%h1 Editing snack
+
+= render "form", snack: @snack
+
+%br
+
+%div
+  = link_to "Show this snack", @snack
+  |
+  = link_to "Back to snacks", snacks_path
