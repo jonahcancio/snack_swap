@@ -1,6 +1,8 @@
+
+
 %h1 Log in
 
-= form_with url: sessions_path, local: true do |form|
+= form_with url: session_path, local: true do |form|
   .field
     = form.label :email
     = form.text_field :email, autofocus: true, required: true

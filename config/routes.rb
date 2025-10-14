@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+  resource :session
+  root "snacks#index"
+
   resources :flavors
   resources :snacks
 
-  resources :sessions, only: [:new, :create, :destroy]
-  get "login", to: "sessions#new"
+  resource :session, only: [:new, :create, :destroy]
+  get "login", to: "sessions#new", as: :login
   post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
+  delete "logout", to: "sessions#destroy", as: :logout
 
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
