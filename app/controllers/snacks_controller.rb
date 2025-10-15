@@ -26,11 +26,9 @@ class SnacksController < ApplicationController
 
     respond_to do |format|
       if @snack.save
-        format.turbo_stream
-        format.html { redirect_to @snack, notice: "Snack was successfully created." }
+        format.html { redirect_to snacks_path, notice: "Snack was successfully created." }
         format.json { render :show, status: :created, location: @snack }
       else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("modal", partial: "snacks/form", locals: { snack: @snack }) }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @snack.errors, status: :unprocessable_entity }
       end
@@ -41,11 +39,9 @@ class SnacksController < ApplicationController
   def update
     respond_to do |format|
       if @snack.update(snack_params)
-        format.turbo_stream
-        format.html { redirect_to @snack, notice: "Snack was successfully updated.", status: :see_other }
+        format.html { redirect_to snacks_path, notice: "Snack was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @snack }
       else
-        format.turbo_stream { render :edit, status: :unprocessable_entity }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @snack.errors, status: :unprocessable_entity }
       end

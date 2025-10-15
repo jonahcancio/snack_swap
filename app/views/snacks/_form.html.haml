@@ -1,4 +1,4 @@
-= form_with(model: snack, data: { turbo_frame: "modal" }, class: "needs-validation") do |form|
+= form_with(model: snack, data: { turbo_frame: "_top" }, class: "needs-validation") do |form|
   - if snack.errors.any?
     .alert.alert-danger
       %h4.mb-2= "#{pluralize(snack.errors.count, 'error')} prohibited this snack from being saved:"
@@ -21,7 +21,7 @@
     .mb-3
     = form.label :flavor_ids, "Flavors", class: "form-label"
     = form.collection_select :flavor_ids, Flavor.all, :id, :name,
-        { include_hidden: false, selected: snack.flavor_ids },
+        { selected: snack.flavor_ids },
         { multiple: true, class: "form-select", id: "flavor-select" }
 
   .d-flex.justify-content-end
