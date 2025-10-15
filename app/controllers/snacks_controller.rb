@@ -1,5 +1,5 @@
 class SnacksController < ApplicationController
-  before_action :set_snack, only: %i[ show edit update destroy ]
+  before_action :set_snack, only: %i[ show edit update destroy swap_out swap_in ]
 
   # GET /snacks or /snacks.json
   def index
@@ -65,6 +65,21 @@ class SnacksController < ApplicationController
       format.html { redirect_to snacks_path, notice: "Snack successfully deleted!" }
       format.json { head :no_content }
     end
+  end
+
+  def swap_out
+    respond_to do |format|
+      if current_user.snacks.delete(@snack)
+        format.html { redirect_to snacks_path, notice: "Snack removed from your bar." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to snacks_path, alert: "Unable to remove snack from bar" }
+        format.json { render json: { error: "Unable to remove snack" }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def swap_in
   end
 
   private

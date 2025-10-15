@@ -1,4 +1,4 @@
-.col-12.col-md-3.mb-4{id: "snack-#{snack.id}"}
+.col-12.col-md-4.mb-4{id: "snack-#{snack.id}"}
   .card.h-100
     %img.card-img-top{ src: snack.img_url, alt: "..." }
     .card-body
@@ -20,9 +20,12 @@
         = link_to "Edit", edit_snack_path(snack),
           class: "btn btn-info",
           data: { turbo_frame: "modal" }
+        = link_to "Swap", swap_out_snack_path(snack),
+          class: "btn btn-warning",
+          data: { turbo_confirm: "Are you sure you want to swap out this snack?", turbo_method: :patch }
         = link_to "Delete", snack_path(snack),
           class: "btn btn-danger",
-          data: { turbo_confirm: "Are you sure?", turbo_method: :delete }
+          data: { turbo_confirm: "Are you sure you want to permanently delete this snack?", turbo_method: :delete }
 
 
 

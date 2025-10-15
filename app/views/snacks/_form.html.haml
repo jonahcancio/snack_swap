@@ -25,10 +25,6 @@
       = form.label :description, class: "form-label"
       = form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe this snack"
 
-    .mb-3
-      = form.label :img_url, class: "form-label"
-      = form.text_field :img_url, class: "form-control", placeholder: "https://example.com/image.jpg"
-
       .mb-3
       = form.label :flavor_ids, "Flavors", class: "form-label"
       = form.collection_select :flavor_ids, Flavor.all, :id, :name,

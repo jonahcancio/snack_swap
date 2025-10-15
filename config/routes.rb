@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   root "snacks#index"
 
   resources :flavors
-  resources :snacks
+  resources :snacks do
+    member do
+      patch :swap_out
+      patch :swap_in
+    end
+  end
 
   resource :session, only: [:new, :create, :destroy]
   get "login", to: "sessions#new", as: :login
