@@ -12,13 +12,13 @@
       .card-header.d-flex.justify-content-between
         %h4 My Snacks
         = link_to "Add Snack", new_snack_path,
-          data: { controller: "modal-link", action: "click->modal-link#open"},
+          data: { turbo_frame: "modal" },
           class: "btn btn-primary"
+
       .card-body
         #snacks.row
           - @snacks.each do |snack|
-            .col-12.col-md-3.mb-4{ id: dom_id(snack) }
-              = render snack
+            = render snack
 
 
 

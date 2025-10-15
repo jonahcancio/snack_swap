@@ -1,11 +1,13 @@
 %turbo-stream{ action: "append", target: "snacks" }
   %template
-    .col-12.col-md-3.mb-4
-      = render partial: "snacks/snack", formats: [:html], locals: { snack: @snack }
+    = render partial: "snacks/snack", formats: [:html], locals: { snack: @snack }
 
 %turbo-stream{ action: "replace", target: "notice-container" }
   %template
     = render partial: "shared/notice", locals: { notice: "Snack successfully created!" }, formats: [:html]
 
-%turbo-stream{ action: "replace", target: "modal-body" }
+%turbo-stream{ action: "update", target: "modal" }
   %template
+    = ""
+    %script
+      document.getElementById("modal")?.dispatchEvent(new Event("modal:close"))

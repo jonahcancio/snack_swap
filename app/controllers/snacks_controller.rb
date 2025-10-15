@@ -54,10 +54,8 @@ class SnacksController < ApplicationController
 
   # DELETE /snacks/1 or /snacks/1.json
   def destroy
-    @snack.destroy!
-
+    @snack.destroy
     respond_to do |format|
-      format.turbo_stream
       format.html { redirect_to snacks_path, notice: "Snack successfully deleted!" }
       format.json { head :no_content }
     end

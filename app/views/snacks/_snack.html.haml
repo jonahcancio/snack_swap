@@ -1,26 +1,28 @@
-.card.h-100
-  %img.card-img-top{ src: snack.img_url, alt: "..." }
-  .card-body
-    %h5.card-title= snack.name
-    %p.card-text
-      = snack.description
-    %p.card-text
-      - snack.flavors.each do |flavor|
-        - color = flavor.color
-        - r, g, b = color[1..2].to_i(16), color[3..4].to_i(16), color[5..6].to_i(16)
-        - brightness = (r * 299 + g * 587 + b * 114) / 1000
-        - text_color = brightness > 186 ? "black" : "white"
-        - border_style = brightness > 186 ? "1px solid #333" : "1px solid #ccc"
-        %span.badge{ style: "background-color: #{ flavor.color }; color: #{ text_color }; border: #{border_style} "}
-          = flavor.name
-  .card-footer
-    .d-flex.justify-content-around
-      = link_to "Edit", edit_snack_path(snack),
-        class: "btn btn-info",
-        data: { controller: "modal-link", action: "click->modal-link#open" }
-      = link_to "Delete", snack_path(snack),
-        class: "btn btn-danger",
-        data: { turbo_confirm: "Are you sure?", turbo_method: :delete }
+.col-12.col-md-3.mb-4{id: "snack-#{snack.id}"}
+  .card.h-100
+    %img.card-img-top{ src: snack.img_url, alt: "..." }
+    .card-body
+      %h5.card-title= snack.name
+      %p.card-text
+        = snack.description
+      %p.card-text
+        - snack.flavors.each do |flavor|
+          - color = flavor.color
+          - r, g, b = color[1..2].to_i(16), color[3..4].to_i(16), color[5..6].to_i(16)
+          - brightness = (r * 299 + g * 587 + b * 114) / 1000
+          - text_color = brightness > 186 ? "black" : "white"
+          - border_style = brightness > 186 ? "1px solid #333" : "1px solid #ccc"
+          %span.badge{ style: "background-color: #{ flavor.color }; color: #{ text_color }; border: #{border_style} "}
+            = flavor.name
+
+    .card-footer
+      .d-flex.justify-content-around
+        = link_to "Edit", edit_snack_path(snack),
+          class: "btn btn-info",
+          data: { turbo_frame: "modal" }
+        = link_to "Delete", snack_path(snack),
+          class: "btn btn-danger",
+          data: { turbo_confirm: "Are you sure?", turbo_method: :delete }
 
 
 
