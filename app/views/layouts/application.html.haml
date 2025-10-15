@@ -10,11 +10,20 @@
   %body
     = render "shared/navbar"
 
+    #notice-container
+
     .container.mt-4
       = yield
 
-    #modal-container
-      = turbo_frame_tag "modal", data: { controller: "modal" }
+
+    = turbo_frame_tag "modal" do
+      .modal.fade{ tabindex: "-1", role: "dialog", style: "display: none;" }
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h5.modal-title
+              %button.btn-close{ type: "button", data: { action: "click->modal-link#close" } }
+            .modal-body
 
 
 

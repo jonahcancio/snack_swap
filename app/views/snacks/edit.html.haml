@@ -1,12 +1,9 @@
-- content_for :title, "Editing snack"
-
-%h1 Editing snack
-
-= render "form", snack: @snack
-
-%br
-
-%div
-  = link_to "Show this snack", @snack
-  |
-  = link_to "Back to snacks", snacks_path
+= turbo_frame_tag "modal" do
+  .modal.fade.show.d-block{ tabindex: "-1", role: "dialog", style: "background-color: rgba(0,0,0,0.5);" }
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %h5.modal-title Edit Snack
+          %button.btn-close{ type: "button", data: { action: "click->modal#close" } }
+        .modal-body
+          = render "form", snack: @snack
