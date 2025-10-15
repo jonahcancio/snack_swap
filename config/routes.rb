@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :flavors
   resources :snacks do
     member do
-      patch :swap_out
-      patch :swap_in
+      post :swap_out
+      post :swap_in
     end
   end
 

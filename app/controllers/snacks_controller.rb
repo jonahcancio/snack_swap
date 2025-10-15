@@ -1,11 +1,11 @@
 class SnacksController < ApplicationController
-  before_action :set_snack, only: %i[ show edit update destroy swap_out swap_in ]
+  before_action :set_snack, only: %i[ show edit update destroy swap_out ]
 
   # GET /snacks or /snacks.json
   def index
     @snacks = current_user.snacks.includes(:flavors)
     @similar_snacks = current_user.similar_snacks.includes(:flavors)
-
+    @complementary_snacks = current_user.complementary_snacks.includes(:flavors)
   end
 
   # GET /snacks/1 or /snacks/1.json
@@ -69,6 +69,7 @@ class SnacksController < ApplicationController
     end
   end
 
+
   def swap_out
     respond_to do |format|
       if current_user.snacks.delete(@snack)
@@ -82,7 +83,19 @@ class SnacksController < ApplicationController
   end
 
   def swap_in
+    @snack = Snack.find(params.expect(:id))
+    unless current_user.snacks.exists?(@snack.id)
+      current_user.snacks << @snack
+      notice = "Snack added to your bar."
+    else
+      notice = "Snack is already in your bar."
+    end
+    respond_to do |format|
+      format.html { redirect_to snacks_path, notice: notice }
+      format.json { head :no_content }
+    end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

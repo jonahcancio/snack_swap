@@ -16,20 +16,29 @@
           class: "btn btn-primary"
 
       .card-body
-        #snacks.row
+        .snacks.row
           - @snacks.each do |snack|
-            = render snack
+            .col-12.col-md-4.mb-4{id: "snack-#{snack.id}"}
+              = render "snack", snack: snack, owned: true
   .col-4
     .card.mb-4
       .card-header.d-flex.justify-content-between
-        %h4 Similar Swaps...
+        %h4 Similar Swaps
       .card-body
-        stuff
+        .snacks.row
+          - @similar_snacks.each do |snack|
+            .col-6{id: "similar-snack-#{snack.id}"}
+              = render "snack", snack: snack, owned: false
+
     .card
       .card-header.d-flex.justify-content-between
-        %h4 Complementary Swaps...
+        %h4 Complementary Swaps
       .card-body
-        stuff
+        .snacks.row
+          - @complementary_snacks.each do |snack|
+            .col-6{id: "complementary-snack-#{snack.id}"}
+              = render "snack", snack: snack, owned: false
+
 
 
 
