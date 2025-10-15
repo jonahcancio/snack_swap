@@ -3,7 +3,7 @@ class SnacksController < ApplicationController
 
   # GET /snacks or /snacks.json
   def index
-    @snacks = Snack.all.includes(:flavors)
+    @snacks = current_user.snacks.includes(:flavors)
   end
 
   # GET /snacks/1 or /snacks/1.json
@@ -12,7 +12,7 @@ class SnacksController < ApplicationController
 
   # GET /snacks/new
   def new
-    @snack = Snack.new
+    @snack = current_user.snacks.new
     render layout: false if turbo_frame_request?
   end
 
@@ -22,7 +22,7 @@ class SnacksController < ApplicationController
 
   # POST /snacks or /snacks.json
   def create
-    @snack = Snack.new(snack_params)
+    @snack = current_user.snacks.new(snack_params)
 
     respond_to do |format|
       if @snack.save
@@ -60,7 +60,7 @@ class SnacksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_snack
-      @snack = Snack.find(params.expect(:id))
+      @snack = current_user.snacks.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
