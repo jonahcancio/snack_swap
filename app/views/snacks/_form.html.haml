@@ -6,23 +6,34 @@
         - snack.errors.each do |error|
           %li= error.full_message
 
-  .mb-3
-    = form.label :name, class: "form-label"
-    = form.text_field :name, class: "form-control", placeholder: "Enter snack name"
+  - if snack.new_record?
+    .mb-3
+      = form.label :existing_snack_id, "Select an existing snack", class: "fw-bold h6"
+      = form.collection_select :existing_snack_id, @available_snacks, :id, :name,
+          { include_blank: "— Create a new snack instead —" },
+          { class: "form-select", id: "existing-snack-select" }
 
-  .mb-3
-    = form.label :description, class: "form-label"
-    = form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe this snack"
+    %hr
 
-  .mb-3
-    = form.label :img_url, class: "form-label"
-    = form.text_field :img_url, class: "form-control", placeholder: "https://example.com/image.jpg"
+  #new-snack-fields
+    .fw-bold.h6= snack.new_record? ? "Or create a new snack" : "Edit snack details:"
+    .mb-3
+      = form.label :name, class: "form-label"
+      = form.text_field :name, class: "form-control", placeholder: "Enter snack name"
 
     .mb-3
-    = form.label :flavor_ids, "Flavors", class: "form-label"
-    = form.collection_select :flavor_ids, Flavor.all, :id, :name,
-        { selected: snack.flavor_ids },
-        { multiple: true, class: "form-select", id: "flavor-select" }
+      = form.label :description, class: "form-label"
+      = form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe this snack"
+
+    .mb-3
+      = form.label :img_url, class: "form-label"
+      = form.text_field :img_url, class: "form-control", placeholder: "https://example.com/image.jpg"
+
+      .mb-3
+      = form.label :flavor_ids, "Flavors", class: "form-label"
+      = form.collection_select :flavor_ids, Flavor.all, :id, :name,
+          { selected: snack.flavor_ids },
+          { multiple: true, class: "form-select", id: "flavor-select" }
 
   .d-flex.justify-content-end
     = form.submit "Save Snack", class: "btn btn-primary"
@@ -37,4 +48,19 @@
         placeholderText: 'Select one or more flavors'
       }
     })
+
+    const existingSelect = document.getElementById("existing-snack-select");
+    const newSnackFields = document.getElementById("new-snack-fields");
+
+    function toggleNewSnackFields() {
+      if (existingSelect.value) {
+        newSnackFields.style.display = "none";
+      } else {
+        newSnackFields.style.display = "";
+      }
+    }
+
+    existingSelect.addEventListener("change", toggleNewSnackFields);
+    toggleNewSnackFields(); // run on load in case a value is preselected
+
   })

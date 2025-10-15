@@ -12,6 +12,7 @@ class SnacksController < ApplicationController
 
   # GET /snacks/new
   def new
+    @available_snacks = Snack.where.not(id: current_user.snack_ids)
     @snack = current_user.snacks.new
     render layout: false if turbo_frame_request?
   end
@@ -22,15 +23,24 @@ class SnacksController < ApplicationController
 
   # POST /snacks or /snacks.json
   def create
-    @snack = current_user.snacks.new(snack_params)
+    if snack_params[:existing_snack_id].present?
+      snack = Snack.find(snack_params[:existing_snack_id])
+      current_user.snacks << snack unless current_user.snacks.include?(snack)
+      redirect_to snacks_path, notice: "#{snack.name} added to your snacks."
+    else
+      @snack = Snack.new(snack_params.except(:existing_snack_id))
+      @snack.flavor_ids = @snack.flavor_ids.reject(&:blank?)
 
-    respond_to do |format|
-      if @snack.save
-        format.html { redirect_to snacks_path, notice: "Snack was successfully created." }
-        format.json { render :show, status: :created, location: @snack }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @snack.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @snack.save
+          current_user.snacks << @snack
+          format.html { redirect_to snacks_path, notice: "Snack was successfully created." }
+          format.json { render :show, status: :created, location: @snack }
+        else
+          @available_snacks = Snack.where.not(id: current_user.snack_ids)
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @snack.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -65,6 +75,6 @@ class SnacksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def snack_params
-      params.expect(snack: [ :name, :description, :img_url, flavor_ids: [] ])
+      params.expect(snack: [ :name, :description, :img_url, :existing_snack_id, flavor_ids: [] ])
     end
 end
