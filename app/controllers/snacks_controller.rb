@@ -69,6 +69,6 @@ class SnacksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def snack_params
-      params.expect(snack: [ :name, :description, :img_url ])
+      params.expect(snack: [ :name, :description, :img_url, flavor_ids: [] ])
     end
 end
