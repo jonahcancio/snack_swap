@@ -2,12 +2,23 @@
 
 - content_for :title, "Snacks"
 
-%h1 Snacks
+.jumbotron.jumbotron-fluid.mb-4
+  .container
+    %h1.display-4 Snack Swap
+    %p.lead
+      Swap your favorite snacks here
 
-%div{id: "snacks"}
-  - @snacks.each do |snack|
-    = render snack
-    %p
-      = link_to "Show this snack", snack
+.row
+  .col-9
+    .card
+      .card-header.d-flex.justify-content-between
+        %h4 My Snacks
+        = link_to "Add snack", new_snack_path, class: "btn btn-primary"
+      .card-body.d-flex#snacks-container
+        .row
+          - @snacks.each do |snack|
+            .col-md-3.mb-4
+              = render snack
 
-= link_to "New snack", new_snack_path
+
+
