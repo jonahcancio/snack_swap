@@ -46,25 +46,25 @@ gem "color"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rubocop', require: false
-  gem "rubocop-rails-omakase", require: false
+  gem 'factory_bot_rails'
+  gem "rspec-rails", "~> 8.0.0"
+  gem 'faker'
 end
+
+
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'rspec-rails', '~> 8.0.0'
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'rspec-rails', '~> 8.0.0'
 end

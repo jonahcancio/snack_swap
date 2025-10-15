@@ -7,7 +7,7 @@ class Snack < ApplicationRecord
   has_many :snack_flavors, dependent: :destroy
   has_many :flavors, through: :snack_flavors
 
-  def similar_color_snacks(tolerance: 15)
+  def similar_color_snacks
     return Snack.none if flavors.empty? || flavors.pluck(:color).compact.empty?
 
     similar_flavor_ids = []
@@ -17,7 +17,7 @@ class Snack < ApplicationRecord
 
       Flavor.find_each do |other|
         next if other.color.blank?
-        if Flavor.similar_color?(flavor.color, other.color, tolerance: tolerance)
+        if Flavor.similar_color?(flavor.color, other.color)
           similar_flavor_ids << other.id
         end
       end
@@ -29,7 +29,7 @@ class Snack < ApplicationRecord
          .distinct
   end
 
-  def complementary_color_snacks(tolerance: 15)
+  def complementary_color_snacks
     return Snack.none if flavors.empty? || flavors.pluck(:color).compact.empty?
 
     complementary_flavor_ids = []
@@ -39,7 +39,7 @@ class Snack < ApplicationRecord
 
       Flavor.find_each do |other|
         next if other.color.blank?
-        if Flavor.near_complementary_color?(flavor.color, other.color, tolerance: tolerance)
+        if Flavor.complementary_color?(flavor.color, other.color)
           complementary_flavor_ids << other.id
         end
       end
