@@ -4,6 +4,8 @@ class SnacksController < ApplicationController
   # GET /snacks or /snacks.json
   def index
     @snacks = current_user.snacks.includes(:flavors)
+    @similar_snacks = current_user.similar_snacks.includes(:flavors)
+
   end
 
   # GET /snacks/1 or /snacks/1.json

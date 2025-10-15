@@ -7,7 +7,7 @@
       Swap your favorite snacks here
 
 .row
-  .col-9
+  .col-8
     .card
       .card-header.d-flex.justify-content-between
         %h4 My Snacks
@@ -19,10 +19,15 @@
         #snacks.row
           - @snacks.each do |snack|
             = render snack
-  .col-3
+  .col-4
+    .card.mb-4
+      .card-header.d-flex.justify-content-between
+        %h4 Similar Swaps...
+      .card-body
+        stuff
     .card
       .card-header.d-flex.justify-content-between
-        %h4 Swap With...
+        %h4 Complementary Swaps...
       .card-body
         stuff
 
