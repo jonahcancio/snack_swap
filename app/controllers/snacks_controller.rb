@@ -13,6 +13,7 @@ class SnacksController < ApplicationController
   # GET /snacks/new
   def new
     @snack = Snack.new
+    render layout: false if turbo_frame_request?
   end
 
   # GET /snacks/1/edit
