@@ -7,6 +7,13 @@ class Snack < ApplicationRecord
   has_many :snack_flavors, dependent: :destroy
   has_many :flavors, through: :snack_flavors
 
+  def self.most_popular
+    joins(:users)
+      .group('snacks.id')
+      .order('COUNT(users.id) DESC')
+      .first
+  end
+
   def similar_color_snacks
     return Snack.none if flavors.empty? || flavors.pluck(:color).compact.empty?
 

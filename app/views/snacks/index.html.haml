@@ -9,7 +9,7 @@
 .container-fluid
   .row
     .col-lg-8.col-md-12
-      .card
+      .card.mb-4
         .card-header.d-flex.justify-content-between
           %h4 My Snacks
           = form_with url: snacks_path, method: :get, local: true, html: { class: "d-flex align-items-center" } do |f|
@@ -25,6 +25,16 @@
             - @snacks.each do |snack|
               .col-lg-4.col-md-6.mb-4{id: "snack-#{snack.id}"}
                 = render "snack", snack: snack, card: "owned"
+
+      .card
+        .card-header.d-flex.justify-content-between
+          %h4 Snack of the day
+        .card-body
+          .snacks.row
+            - snack = Snack.most_popular
+            .col-12{id: "popular-snack-#{snack.id}"}
+              = render "snack", snack: snack, card: "popular"
+
     .col-lg-4.col-md-12
       .card.mb-4
         .card-header.d-flex.justify-content-between
@@ -34,7 +44,6 @@
             - @similar_snacks.each do |snack|
               .col-6{id: "similar-snack-#{snack.id}"}
                 = render "snack", snack: snack, card: "similar"
-
       .card
         .card-header.d-flex.justify-content-between
           %h4 Complementary Swaps

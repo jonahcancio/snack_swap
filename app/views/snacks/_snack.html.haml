@@ -31,7 +31,7 @@
         = link_to "Delete", snack_path(snack),
           class: "btn btn-danger",
           data: { turbo_confirm: "Are you sure you want to permanently delete this snack?", turbo_method: :delete }
-      - else
+      - elsif current_user.snacks.where(id: snack.id).empty?
         = link_to "Swap", swap_in_snack_path(snack),
           class: "btn btn-success",
           data: { turbo_confirm: "Are you sure you want to swap in this snack?", turbo_method: :post }
