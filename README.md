@@ -35,7 +35,7 @@ It’s built with **Ruby on Rails 8**, **Bootstrap 5**, and **Turbo/Hotwire**.
     - All functions happen on virtually the same page
 
 ---
-## Setup Instructions
+## 🔧 Setup Instructions
 
 1. **Clone the repository**
 ```bash
