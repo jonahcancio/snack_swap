@@ -68,11 +68,6 @@ rails server
 ### Additional Notes
 **Seed Data**: The seeded database includes two default users:
 
-  | Name  | Email              | Password   |
-    |-------|------------------|-----------|
-  | Admin | admin@admin.com   | admin123  |
-  | Hornet| hornet@silksong.com | shaw      |
-
 ```
 user1 = User.create!(
   name: "Admin",
