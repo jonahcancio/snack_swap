@@ -25,11 +25,11 @@
       = form.label :description, class: "form-label"
       = form.text_area :description, class: "form-control", rows: 4, placeholder: "Describe this snack"
 
-      .mb-3
+    .mb-3
       = form.label :flavor_ids, "Flavors", class: "form-label"
       = form.collection_select :flavor_ids, Flavor.all, :id, :name,
-          { selected: snack.flavor_ids },
-          { multiple: true, class: "form-select", id: "flavor-select" }
+        { selected: snack.flavor_ids, include_blank: false },
+        { multiple: true, class: "form-select", id: "flavor-select" }
 
   .d-flex.justify-content-end
     = form.submit "Save Snack", class: "btn btn-primary"
@@ -37,26 +37,30 @@
 
 :javascript
   document.addEventListener("turbo:frame-load", function() {
-    console.log("LOADED")
-    new SlimSelect({
-      select: '#flavor-select',
-      settings: {
-        placeholderText: 'Select one or more flavors'
-      }
-    })
+    console.log("FORM LOADING TIME")
+    new TomSelect("#flavor-select", {
+      plugins: ['remove_button'],
+      placeholder: "Select flavors...",
+      persist: false,
+      create: false,
+      closeAfterSelect: false,
+      allowEmptyOption: false
+    });
 
     const existingSelect = document.getElementById("existing-snack-select");
     const newSnackFields = document.getElementById("new-snack-fields");
 
     function toggleNewSnackFields() {
-      if (existingSelect.value) {
+      if (existingSelect?.value) {
         newSnackFields.style.display = "none";
       } else {
         newSnackFields.style.display = "";
       }
     }
 
-    existingSelect.addEventListener("change", toggleNewSnackFields);
-    toggleNewSnackFields(); // run on load in case a value is preselected
+    if (existingSelect) {
+      existingSelect.addEventListener("change", toggleNewSnackFields);
+    }
+    toggleNewSnackFields();
 
   })

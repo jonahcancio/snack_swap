@@ -53,6 +53,8 @@ class SnacksController < ApplicationController
 
   # PATCH/PUT /snacks/1 or /snacks/1.json
   def update
+    Rails.logger.debug "🔍 snack_params: #{snack_params.inspect}"
+
     respond_to do |format|
       if @snack.update(snack_params)
         format.html { redirect_to snacks_path, notice: "Snack was successfully updated.", status: :see_other }
