@@ -32,8 +32,9 @@
         .card-body
           .snacks.row
             - snack = Snack.most_popular
-            .col-12.mb-3{id: "popular-snack-#{snack.id}"}
-              = render "snack", snack: snack, card: "popular"
+            - if snack.present?
+              .col-12.mb-3{id: "popular-snack-#{snack.id}"}
+                = render "snack", snack: snack, card: "popular"
 
     .col-lg-4.col-md-12
       .card.mb-4

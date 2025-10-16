@@ -2,6 +2,10 @@ require "rails_helper"
 
 RSpec.describe SnacksController, type: :routing do
   describe "routing" do
+    it "routes root path to snacks#index" do
+      expect(get: "/").to route_to("snacks#index")
+    end
+
     it "routes to #index" do
       expect(get: "/snacks").to route_to("snacks#index")
     end
