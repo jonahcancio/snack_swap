@@ -11,6 +11,10 @@
     .card
       .card-header.d-flex.justify-content-between
         %h4 My Snacks
+        = form_with url: snacks_path, method: :get, local: true, html: { class: "d-flex align-items-center" } do |f|
+          = f.select :flavor_filter, options_from_collection_for_select(Flavor.all, :id, :name, params[:flavor_filter]),
+            { include_blank: "All Flavors" },
+            { class: "form-select", onchange: "this.form.submit();" }
         = link_to "Add Snack", new_snack_path,
           data: { turbo_frame: "modal" },
           class: "btn btn-primary"

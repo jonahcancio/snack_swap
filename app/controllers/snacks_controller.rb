@@ -6,6 +6,10 @@ class SnacksController < ApplicationController
     @snacks = current_user.snacks.includes(:flavors)
     @similar_snacks = current_user.similar_snacks.includes(:flavors)
     @complementary_snacks = current_user.complementary_snacks.includes(:flavors)
+
+    if search_params[:flavor_filter].present?
+      @snacks = @snacks.joins(:flavors).where(flavors: { id: search_params[:flavor_filter] })
+    end
   end
 
   # GET /snacks/1 or /snacks/1.json
@@ -106,5 +110,9 @@ class SnacksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def snack_params
       params.expect(snack: [ :name, :description, :img_url, :existing_snack_id, flavor_ids: [] ])
+    end
+
+    def search_params
+      params.permit(:flavor_filter)
     end
 end
