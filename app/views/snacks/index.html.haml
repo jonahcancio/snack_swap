@@ -24,7 +24,7 @@
           .snacks.row
             - @snacks.each do |snack|
               .col-lg-4.col-md-6.mb-4{id: "snack-#{snack.id}"}
-                = render "snack", snack: snack, owned: true
+                = render "snack", snack: snack, card: "owned"
     .col-lg-4.col-md-12
       .card.mb-4
         .card-header.d-flex.justify-content-between
@@ -33,7 +33,7 @@
           .snacks.row
             - @similar_snacks.each do |snack|
               .col-6{id: "similar-snack-#{snack.id}"}
-                = render "snack", snack: snack, owned: false
+                = render "snack", snack: snack, card: "similar"
 
       .card
         .card-header.d-flex.justify-content-between
@@ -42,7 +42,7 @@
           .snacks.row
             - @complementary_snacks.each do |snack|
               .col-6{id: "complementary-snack-#{snack.id}"}
-                = render "snack", snack: snack, owned: false
+                = render "snack", snack: snack, card: "complementary"
 
 
 

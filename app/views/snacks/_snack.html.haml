@@ -1,5 +1,10 @@
 .card.h-100.mb-3
-  %img.card-img-top{ src: snack&.img_url, alt: "..." }
+  %img.card-img-top{
+    src: snack&.img_url || "https://img.freepik.com/premium-photo/empty-wineglass-red-wine-diffusion-lit-abstract-composition-with-reflection_122647-428.jpg",
+    alt: snack&.name || "...",
+    style: "height: 200px; object-fit: cover;",
+    onerror: "this.onerror=null;this.src='https://img.freepik.com/premium-photo/empty-wineglass-red-wine-diffusion-lit-abstract-composition-with-reflection_122647-428.jpg';"
+    }
   .card-body
     %h5.card-title= snack.name
     %p.card-text
@@ -11,12 +16,12 @@
         - brightness = (r * 299 + g * 587 + b * 114) / 1000
         - text_color = brightness > 186 ? "black" : "white"
         - border_style = brightness > 186 ? "1px solid #333" : "1px solid #ccc"
-        %span.badge{ style: "background-color: #{ flavor.color }; color: #{ text_color }; border: #{border_style} "}
+        %span.badge{ id: "#{card}-snack-#{snack.id}-flavor-#{flavor.id}", style: "background-color: #{ flavor.color }; color: #{ text_color }; border: #{border_style} "}
           = flavor.name
 
   .card-footer
     .d-flex.justify-content-around
-      - if owned
+      - if card == "owned"
         = link_to "Edit", edit_snack_path(snack),
           class: "btn btn-info",
           data: { turbo_frame: "modal" }
