@@ -6,42 +6,43 @@
     %p.lead
       Swap your favorite snacks here
 
-.row
-  .col-8
-    .card
-      .card-header.d-flex.justify-content-between
-        %h4 My Snacks
-        = form_with url: snacks_path, method: :get, local: true, html: { class: "d-flex align-items-center" } do |f|
-          = f.select :flavor_filter, options_from_collection_for_select(Flavor.all, :id, :name, params[:flavor_filter]),
-            { include_blank: "All Flavors" },
-            { class: "form-select", onchange: "this.form.submit();" }
-        = link_to "Add Snack", new_snack_path,
-          data: { turbo_frame: "modal" },
-          class: "btn btn-primary"
+.container-fluid
+  .row
+    .col-lg-8.col-md-12
+      .card
+        .card-header.d-flex.justify-content-between
+          %h4 My Snacks
+          = form_with url: snacks_path, method: :get, local: true, html: { class: "d-flex align-items-center" } do |f|
+            = f.select :flavor_filter, options_from_collection_for_select(Flavor.all, :id, :name, params[:flavor_filter]),
+              { include_blank: "All Flavors" },
+              { class: "form-select", onchange: "this.form.submit();" }
+          = link_to "Add Snack", new_snack_path,
+            data: { turbo_frame: "modal" },
+            class: "btn btn-primary"
 
-      .card-body
-        .snacks.row
-          - @snacks.each do |snack|
-            .col-12.col-md-4.mb-4{id: "snack-#{snack.id}"}
-              = render "snack", snack: snack, owned: true
-  .col-4
-    .card.mb-4
-      .card-header.d-flex.justify-content-between
-        %h4 Similar Swaps
-      .card-body
-        .snacks.row
-          - @similar_snacks.each do |snack|
-            .col-6{id: "similar-snack-#{snack.id}"}
-              = render "snack", snack: snack, owned: false
+        .card-body
+          .snacks.row
+            - @snacks.each do |snack|
+              .col-lg-4.col-md-6.mb-4{id: "snack-#{snack.id}"}
+                = render "snack", snack: snack, owned: true
+    .col-lg-4.col-md-12
+      .card.mb-4
+        .card-header.d-flex.justify-content-between
+          %h4 Similar Swaps
+        .card-body
+          .snacks.row
+            - @similar_snacks.each do |snack|
+              .col-6{id: "similar-snack-#{snack.id}"}
+                = render "snack", snack: snack, owned: false
 
-    .card
-      .card-header.d-flex.justify-content-between
-        %h4 Complementary Swaps
-      .card-body
-        .snacks.row
-          - @complementary_snacks.each do |snack|
-            .col-6{id: "complementary-snack-#{snack.id}"}
-              = render "snack", snack: snack, owned: false
+      .card
+        .card-header.d-flex.justify-content-between
+          %h4 Complementary Swaps
+        .card-body
+          .snacks.row
+            - @complementary_snacks.each do |snack|
+              .col-6{id: "complementary-snack-#{snack.id}"}
+                = render "snack", snack: snack, owned: false
 
 
 
