@@ -35,6 +35,66 @@ It’s built with **Ruby on Rails 8**, **Bootstrap 5**, and **Turbo/Hotwire**.
     - All functions happen on virtually the same page
 
 ---
+## Setup Instructions
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/jonahcancio/snack_swap.git
+cd snack_swap
+```
+
+2. **Install dependencies**
+
+```bash
+bundle install
+```
+
+3. **Set up the database**
+
+```bash
+rails db:create
+rails db:migrate
+rails db:seed
+```
+
+4. **Start the Rails server**
+```bash
+rails server
+```
+5. **Visit the application**
+
+6. Open your browser and go to [http://localhost:3000](http://localhost:3000)
+
+### Additional Notes
+**Seed Data**: The seeded database includes two default users:
+
+  | Name  | Email              | Password   |
+    |-------|------------------|-----------|
+  | Admin | admin@admin.com   | admin123  |
+  | Hornet| hornet@silksong.com | shaw      |
+
+```
+user1 = User.create!(
+  name: "Admin",
+  email: "admin@admin.com",
+  password: "admin123"
+)
+
+user2 = User.create!(
+  name: "Hornet",
+  email: "hornet@silksong.com",
+  password: "shaw"
+)
+```
+**Login Instructions**:  
+  To log in as the Admin user, use:
+  - **Email:** `admin@admin.com`
+  - **Password:** `admin123`
+
+
+* To login with admin enter `admin@admin.com` into email and `admin123` in password
+
+---
 
 ## 🧩 Models and Relationships
 
